@@ -1,6 +1,6 @@
 # Databricks MLOps Blueprint
 
-An opinionated architectural reference for doing MLOps on Databricks. For each pillar of the platform it gives you a decision guide ("when to use what"), a diagram, and a small runnable notebook that compares the real options on a shared, real-world example. Where the official docs already explain the *how*, this links out ([docs/links.md](docs/links.md)) and spends its words on the trade-offs a tutorial skips.
+An opinionated architectural reference for doing MLOps on Databricks. For each pillar of the platform it gives you a decision guide ("when to use what") and a diagram, backed by a worked example that runs the real options end-to-end on a shared, real-world dataset. Where the official docs already explain the *how*, this links out ([docs/links.md](docs/links.md)) and spends its words on the trade-offs a tutorial skips.
 
 The bias is insight over coverage: strategic framing and honest trade-offs, not a doc dump.
 
@@ -16,7 +16,7 @@ This map doubles as the table of contents. Start from the question you actually 
 flowchart TD
     Start([What are you trying to do?])
 
-    Start --> Dev{Writing and running code?}
+    Start --> Dev{Setting up and running code?}
     Dev -->|Explore fast| WS[Interactive workspace]
     Dev -->|Engineer properly| IDE[VS Code + Databricks Connect]
     Dev -->|Ship to prod| DAB[Asset Bundle deploy]
@@ -27,16 +27,18 @@ flowchart TD
 
     Start --> Arch{Designing the ML system?}
     Arch --> NB01[["01 . MLOps architecture"]]
-    Arch --> NB02[["02 . Asset bundles"]]
 
     Start --> Cfg{Managing config and secrets?}
-    Cfg --> NB03[["03 . Config management"]]
+    Cfg --> NB02[["02 . Config management"]]
 
-    Start --> Gov{Governing data, models and lifecycle?}
-    Gov --> NB04[["04 . Unity Catalog and MLflow"]]
+    Start --> Train{Building the training pipeline?}
+    Train --> NB03[["03 . Training pipeline"]]
 
-    Start --> Mon{Is it healthy in production?}
-    Mon --> NB05[["05 . Monitoring"]]
+    Start --> Mon{Serving and monitoring in production?}
+    Mon --> NB04[["04 . Serving and monitoring"]]
+
+    Start --> Dep{Deploying and promoting with CI/CD?}
+    Dep --> NB05[["05 . Asset bundles"]]
 
     Start --> Ag{Building an AI agent?}
     Ag --> NB06[["06 . Agent patterns"]]
@@ -49,18 +51,21 @@ flowchart TD
 | # | Notebook | The decision it helps you make |
 |---|----------|--------------------------------|
 | 00 | Dev workflows | Workspace vs VS Code + Connect vs Asset Bundle deploy |
-| 01 | MLOps architecture | Deploy-code vs deploy-model; dev/staging/prod strategy |
-| 02 | Asset bundles | DAB vs notebooks-only vs Terraform; multi-target CI/CD |
-| 03 | Config management | Plain YAML vs widgets vs OmegaConf; secrets handling |
-| 04 | Unity Catalog + MLflow | UC namespace + MLflow lifecycle; when to scale compute |
-| 05 | Monitoring | Lakehouse Monitoring vs custom MLflow metrics vs SQL |
+| 01 | MLOps architecture | The end-to-end loop; deploy-code vs deploy-model; dev/staging/prod |
+| 02 | Config management | Plain YAML vs widgets vs OmegaConf; secrets handling |
+| 03 | Training pipeline | Features + MLflow + Models in Unity Catalog; feature store; when to scale compute |
+| 04 | Serving and monitoring | Model serving; Lakehouse Monitoring vs custom MLflow metrics; drift and retraining |
+| 05 | Asset bundles | DAB vs notebooks-only vs Terraform; multi-target CI/CD; promotion |
 | 06 | Agent patterns | Genie vs Knowledge Assistant vs custom LLM; Vector Search |
 
-Notebooks live at the repository root and are published incrementally; 00 is available today.
+The notebooks build one MLOps system layer by layer: `01` is the architecture map, and `02`-`05`
+implement the loop for real as a single worked example, ending with Asset Bundles as the deploy
+capstone. `06` is a separate agents track. Notebooks live at the repository root and are published
+incrementally; `00` and `01` are available today.
 
 ## The worked example
 
-Every notebook runs end-to-end on one spine: **customer churn**, modelled on the public IBM Telco Customer Churn dataset (7,043 customers, 21 features). By default a notebook synthesizes a faithful stand-in, so it runs anywhere with zero setup; to swap in the real data, see [data/README.md](data/README.md). The agents notebook uses a document-QA corpus instead, since retrieval-augmented generation doesn't fit a churn table.
+The architecture notebook (`01`) is a code-free map. From `02` onward the notebooks build that loop for real as one continuous worked example on a single spine: **customer churn**, modelled on the public IBM Telco Customer Churn dataset (7,043 customers, 21 features). Each notebook synthesizes a faithful stand-in by default, so it runs anywhere with zero setup; to swap in the real data, see [data/README.md](data/README.md). The agents notebook (`06`) uses a document-QA corpus instead, since retrieval-augmented generation doesn't fit a churn table.
 
 ## Running the code
 

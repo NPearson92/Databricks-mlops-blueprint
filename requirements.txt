@@ -1,12 +1,7 @@
-# Core blueprint dependencies. Versions are lower bounds — pin exactly for production.
-omegaconf>=2.3        # layered/nested config + interpolation (notebook 03)
-mlflow>=2.12          # tracking, registry, evaluation (notebook 04)
-pyspark>=3.5          # local Spark for runnable code paths (notebooks 04, 05)
-pyyaml>=6.0           # YAML parsing in config + verification checks
-pytest>=8.0           # unit tests (phase 8)
-
-# Agents (notebook 06) — install when you reach that phase if you prefer a lean env.
-langgraph>=0.1        # mock custom-agent graph
-
-# Authoring / verification tooling
-nbformat>=5.9         # notebook authoring/inspection
+omegaconf
+mlflow
+pyspark
+pyyaml
+pytest
+langgraph
+nbformat

@@ -1,8 +1,6 @@
 
 import os
 
-import os
-
 def get_spark() -> "pyspark.sql.SparkSession":
     """
     Safely retrieves the Spark session while detecting the execution environment.

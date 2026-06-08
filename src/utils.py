@@ -2,6 +2,7 @@
 import os
 
 def upload_to_uc_volume(catalog: str, schema: str, volume: str, local_file_path: str) -> str:
+    
     """
     Uploads a local file to a Unity Catalog Volume so remote Spark can read it.
     
@@ -14,6 +15,7 @@ def upload_to_uc_volume(catalog: str, schema: str, volume: str, local_file_path:
     Returns:
         str: The remote volume path (e.g., /Volumes/main/default/raw/file.csv).
     """
+
     if not os.path.exists(local_file_path):
         raise FileNotFoundError(f"Missing file: {local_file_path}")
 

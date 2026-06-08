@@ -4,6 +4,8 @@ An opinionated architectural reference for doing MLOps on Databricks. For each p
 
 The bias is insight over coverage: strategic framing and honest trade-offs, not a doc dump.
 
+The throughline is the shift from ad-hoc notebook data science to mature, CI/CD-driven engineering: logic modularised into `src/`, strict dev/staging/prod boundaries, and code-first deployment via Asset Bundles. Each pillar is framed as that transition rather than a feature tour.
+
 ## Who it's for
 
 Data scientists and ML engineers deciding how to do MLOps well on Databricks, and anyone who wants the reasoning behind the buttons rather than just the button names.
@@ -58,15 +60,6 @@ flowchart TD
 | 05 | Asset bundles | DAB vs notebooks-only vs Terraform; multi-target CI/CD; promotion |
 | 06 | Agent patterns | Genie vs Knowledge Assistant vs custom LLM; Vector Search |
 
-The notebooks build one MLOps system layer by layer: `01` is the architecture map, and `02`-`05`
-implement the loop for real as a single worked example, ending with Asset Bundles as the deploy
-capstone. `06` is a separate agents track. Notebooks live at the repository root and are published
-incrementally; `00` and `01` are available today.
-
-## The worked example
-
-The architecture notebook (`01`) is a code-free map. From `02` onward the notebooks build that loop for real as one continuous worked example on a single spine: **customer churn**, modelled on the public IBM Telco Customer Churn dataset (7,043 customers, 21 features). Each notebook synthesizes a faithful stand-in by default, so it runs anywhere with zero setup; to swap in the real data, see [data/README.md](data/README.md). The agents notebook (`06`) uses a document-QA corpus instead, since retrieval-augmented generation doesn't fit a churn table.
-
 ## Running the code
 
 There are three ways to run on Databricks; notebook 00 covers when to reach for each.
@@ -88,5 +81,3 @@ databricks.yml     Asset Bundle definition (dev/staging/prod)
 data/              local datasets (gitignored; see data/README.md)
 docs/links.md      curated external references (the "how")
 ```
-
-For the design rationale and the build roadmap, see [CONTEXT.md](CONTEXT.md) and [PLAN.md](PLAN.md).
